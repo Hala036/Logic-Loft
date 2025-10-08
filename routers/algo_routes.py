@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from algorithms.sorting.merge import merge_sort
+from algorithms.sorting.bubble import bubble_sort
 import time
 import inspect
 
@@ -17,6 +18,24 @@ def sort_merge(arr: str):
     code = inspect.getsource(merge_sort)
     return {
         "algorithm: ": "Merge Sort",
+        "input": arr_list, 
+        "output": sorted_list,
+        "runtime": runtime,
+        "code": code
+    }
+
+@router.get("/sort/bubble")
+def sort_merge(arr: str):
+    arr_list = list(map(int, arr.split(',')))
+
+    start = time.time()
+    sorted_list = merge_sort(arr_list)
+    end = time.time()
+    runtime = round((end - start) * 1000, 3)
+
+    code = inspect.getsource(bubble_sort)
+    return {
+        "algorithm: ": "Bubble Sort",
         "input": arr_list, 
         "output": sorted_list,
         "runtime": runtime,
