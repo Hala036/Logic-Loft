@@ -20,4 +20,3 @@ def merge_sort(arr):
     result += right[j:]
 
     return result
-
