@@ -1,13 +1,11 @@
-# O(n^2)
+# worst: O(n^2) avg: O(n^2)
 def bubble_sort(arr):
     n = len(arr)
-
+    res = arr.copy()
     for i in range(n):
-        for j in range(n - i):
-            if arr[i] > arr[j]:
+        for j in range(n - i - 1):
+            if res[j] > res[j + 1]:
                 # switch
-                temp = arr[i]
-                arr[i] = arr[j]
-                arr[j] = temp
+                res[j], res[j + 1] = res[j + 1], res[j]
 
-    return arr
+    return res
