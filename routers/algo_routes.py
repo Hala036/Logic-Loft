@@ -4,6 +4,7 @@ from algorithms.sorting.bubble import bubble_sort
 from algorithms.sorting.insertion import insertion_sort
 from algorithms.sorting.quick import quick_sort
 from algorithms.sorting.heap import heap_sort
+from algorithms.sorting.radix import radix_sort
 import time
 import inspect
 
@@ -28,7 +29,7 @@ def sort_merge(arr: str):
     }
 
 @router.get("/sort/bubble")
-def sort_merge(arr: str):
+def sort_bubble(arr: str):
     arr_list = list(map(int, arr.split(',')))
 
     start = time.time()
@@ -46,7 +47,7 @@ def sort_merge(arr: str):
     }
 
 @router.get("/sort/insertion")
-def sort_merge(arr: str):
+def sort_insertion(arr: str):
     arr_list = list(map(int, arr.split(',')))
 
     start = time.time()
@@ -65,7 +66,7 @@ def sort_merge(arr: str):
 
 
 @router.get("/sort/quick")
-def sort_merge(arr: str):
+def sort_quick(arr: str):
     arr_list = list(map(int, arr.split(',')))
 
     start = time.time()
@@ -83,7 +84,7 @@ def sort_merge(arr: str):
     }
 
 @router.get("/sort/heap")
-def sort_merge(arr: str):
+def sort_heap(arr: str):
     arr_list = list(map(int, arr.split(',')))
 
     start = time.time()
@@ -94,6 +95,24 @@ def sort_merge(arr: str):
     code = inspect.getsource(heap_sort)
     return {
         "algorithm: ": "Heap Sort",
+        "input": arr_list, 
+        "output": sorted_list,
+        "runtime": runtime,
+        "code": code
+    }
+
+@router.get("/sort/radix")
+def sort_radix(arr: str):
+    arr_list = list(map(int, arr.split(',')))
+
+    start = time.time()
+    sorted_list = radix_sort(arr_list)
+    end = time.time()
+    runtime = round((end - start) * 1000, 3)
+
+    code = inspect.getsource(radix_sort)
+    return {
+        "algorithm: ": "Radix Sort",
         "input": arr_list, 
         "output": sorted_list,
         "runtime": runtime,
