@@ -1,12 +1,13 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
+from urllib.parse import unquote
 from algorithms.sorting.merge import merge_sort
 from algorithms.sorting.bubble import bubble_sort
 from algorithms.sorting.insertion import insertion_sort
 from algorithms.sorting.quick import quick_sort
 from algorithms.sorting.heap import heap_sort
 from algorithms.sorting.radix import radix_sort
-import time
-import inspect
+from algorithms.graphs.bfs import bfs
+import json, time, inspect
 
 router = APIRouter(prefix="/api/algorithms", tags=["Algorithms"])
 
@@ -115,6 +116,26 @@ def sort_radix(arr: str):
         "algorithm: ": "Radix Sort",
         "input": arr_list, 
         "output": sorted_list,
+        "runtime": runtime,
+        "code": code
+    }
+
+@router.get("/graphs/bfs")
+def graph_bfs(s: str, graph: str = Query(...)):
+    graph_str = unquote(graph).strip('"')
+    graph_dict = json.loads(graph_str)
+    s = s.strip('"')
+
+    start = time.time()
+    res = bfs(graph_dict, s)
+    end = time.time()
+    runtime = round((end - start) * 1000, 3)
+
+    code = inspect.getsource(bfs)
+    return {
+        "algorithm: ": "Breadth First Search",
+        "input": {"graph": graph_dict, "start": s}, 
+        "output": res,
         "runtime": runtime,
         "code": code
     }
