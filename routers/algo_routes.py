@@ -1,12 +1,15 @@
 from fastapi import APIRouter, Query
 from urllib.parse import unquote
+# import sorting algorithms
 from algorithms.sorting.merge import merge_sort
 from algorithms.sorting.bubble import bubble_sort
 from algorithms.sorting.insertion import insertion_sort
 from algorithms.sorting.quick import quick_sort
 from algorithms.sorting.heap import heap_sort
 from algorithms.sorting.radix import radix_sort
+# import graph algorithms
 from algorithms.graphs.bfs import bfs
+from algorithms.graphs.dfs import dfs
 import json, time, inspect
 
 router = APIRouter(prefix="/api/algorithms", tags=["Algorithms"])
@@ -134,6 +137,26 @@ def graph_bfs(s: str, graph: str = Query(...)):
     code = inspect.getsource(bfs)
     return {
         "algorithm: ": "Breadth First Search",
+        "input": {"graph": graph_dict, "start": s}, 
+        "output": res,
+        "runtime": runtime,
+        "code": code
+    }
+
+@router.get("/graphs/dfs")
+def graph_dfs(s: str, graph: str = Query(...)):
+    graph_str = unquote(graph).strip('"')
+    graph_dict = json.loads(graph_str)
+    s = s.strip('"')
+
+    start = time.time()
+    res = dfs(graph_dict, s)
+    end = time.time()
+    runtime = round((end - start) * 1000, 3)
+
+    code = inspect.getsource(dfs)
+    return {
+        "algorithm: ": "Depth First Search",
         "input": {"graph": graph_dict, "start": s}, 
         "output": res,
         "runtime": runtime,

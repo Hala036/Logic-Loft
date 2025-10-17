@@ -1,6 +1,6 @@
-# O(V + E)
 from collections import deque
 
+# O(V + E)
 def bfs(graph, s):
     color = {node: 'W' for node in graph}
     distance = {node: float('inf') for node in graph}
@@ -36,7 +36,6 @@ def bfs(graph, s):
             res[node] = {"distance": distance[node], "path": path}
 
     return {
-        "start": s,
         "order": order,
         "result": res
     }
