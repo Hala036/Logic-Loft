@@ -8,7 +8,6 @@ def dfs(graph, s, visited=None):
     distance[s] = 0
     order = []
 
-
     def dfs_visit(graph, s, visited):
         visited.add(s)
         order.append(s)
@@ -36,12 +35,3 @@ def dfs(graph, s, visited=None):
         "order": order,
         "result": res
     }    
-
-
-def __main__():
-    graph={"A":["B","C"],"B":["D","E"],"C":["E"],"D":[],"E":[]}
-    
-    print(dfs(graph, "A"))
-
-if __name__ == "__main__":
-    __main__()

@@ -10,6 +10,7 @@ from algorithms.sorting.radix import radix_sort
 # import graph algorithms
 from algorithms.graphs.bfs import bfs
 from algorithms.graphs.dfs import dfs
+from algorithms.graphs.dijkstra import dijkstra
 import json, time, inspect
 
 router = APIRouter(prefix="/api/algorithms", tags=["Algorithms"])
@@ -157,6 +158,26 @@ def graph_dfs(s: str, graph: str = Query(...)):
     code = inspect.getsource(dfs)
     return {
         "algorithm: ": "Depth First Search",
+        "input": {"graph": graph_dict, "start": s}, 
+        "output": res,
+        "runtime": runtime,
+        "code": code
+    }
+
+@router.get("/graphs/dijkstra")
+def graph_dijkstra(s: str, graph: str = Query(...)):
+    graph_str = unquote(graph).strip('"')
+    graph_dict = json.loads(graph_str)
+    s = s.strip('"')
+
+    start = time.time()
+    res = dijkstra(graph_dict, s)
+    end = time.time()
+    runtime = round((end - start) * 1000, 3)
+
+    code = inspect.getsource(dijkstra)
+    return {
+        "algorithm: ": "dijkstra",
         "input": {"graph": graph_dict, "start": s}, 
         "output": res,
         "runtime": runtime,
